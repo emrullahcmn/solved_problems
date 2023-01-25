@@ -12,6 +12,8 @@
 typedef long long ll; 
 using namespace std; 
 
+// Problem: https://codeforces.com/contest/862/problem/E
+
 int main() { 
  
   int n, m, q;
