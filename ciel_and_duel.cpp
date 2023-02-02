@@ -12,8 +12,8 @@
 typedef long long ll; 
 using namespace std;
  
+// Problem: https://codeforces.com/contest/321/problem/B
 ll ans = 0;
- 
  
 void match(vector<int> &attack, vector<int> &fox, bool ok){
     ll cur = 0;
