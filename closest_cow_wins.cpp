@@ -28,7 +28,7 @@ int main() {
   vector<ll> cows(m);
   for(int i = 0; i<m; i++){
     cin >> cows[i];
-    tastes.push_back(MP(cows[i], 0));     // cowları da taste 0 olarak ekledik.
+    tastes.push_back(MP(cows[i], 0)); 
   }
 
   sort(cows.begin(), cows.end());
@@ -38,14 +38,9 @@ int main() {
     tastes[i].second += tastes[i-1].second;
   }
 
-  /* for(auto p : tastes){
-    cout << "point : " <<p.first << " " << p.second << endl;
-  } */
-
   vector<ll> possible;
 
   pair<ll,ll> srch = {0,0};
-  // t t      cow    c c c c      cow          t t      yi ekle burada
 
   srch.first = cows[0];
   auto fst = lower_bound(tastes.begin(), tastes.end(), srch);
@@ -56,8 +51,6 @@ int main() {
   auto sec = lower_bound(tastes.begin(), tastes.end(), srch);
   possible.push_back((*tastes.rbegin()).second -  (*sec).second);
 
- //cout << "ilk taraf: " << possible[0] << " son taraf : " << possible[1] << endl;
-
   for(int i = 0; i+1<m; i++){
     srch.first = cows[i];
     auto sp = lower_bound(tastes.begin(), tastes.end(), srch);
@@ -65,33 +58,19 @@ int main() {
     srch.first = cows[i+1];
     auto fnsh = lower_bound(tastes.begin(), tastes.end(), srch);
 
-    // total value of the range
     ll tot = (*fnsh).second - (*sp).second;
-    //cout << "TOT : " << tot << endl;
     sp++;
-
-    // | sp                |    sp = a+1    fnsh = b
-    //                    fnsh
-    // sp = start point ve fnsh = finish 'in iteratorlerini bulduk suanda
 
     ll d = (cows[i+1] - cows[i])/2;
     ll mx = 0;
     for(auto it = sp; it < fnsh; it++){
 
-        //cout << "0# it : " << (*it).first << " val : " << (*it).second << " d : " << d << endl;
         srch.first = min(cows[i+1], (*it).first + d);
-        //cout << "1# Search : " << srch.first << endl;
-
         auto last_it = lower_bound(tastes.begin(), tastes.end(), srch);
-
-        //cout << "2# Last_Found : " << (*last_it).first<< " val : " << (*last_it).second << endl;
 
         if( (*last_it).first > (*it).first + d ){
           last_it--;
-          //cout << "3# AfterControl Last : " << (*last_it).first<< " val : " << (*last_it).second << endl;
         }
-
-
 
         if( (*last_it).first == (*it).first + d  
         && (cows[i] + cows[i+1])/2 == (cows[i] + cows[i+1])/(double)2 ){
@@ -105,7 +84,6 @@ int main() {
           continue;
         }
 
-        //cout << "4# mx_candidate : " << (*last_it).second - (*it).second << endl;
         mx = max(mx, (*last_it).second - (*it).second);
         it++;
     }
