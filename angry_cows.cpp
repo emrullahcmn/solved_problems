@@ -10,35 +10,25 @@
 #define PB push_back 
 #define MP make_pair 
 typedef long long ll; 
-using namespace std; 
+using namespace std;
 
-//Problem: http://www.usaco.org/index.php?page=viewproblem2&cpid=858
+//Problem : http://www.usaco.org/index.php?page=viewproblem2&cpid=594
 
-int n,m,c;
-int a[100000];
+int n, k;
 
-bool check(int maxt){
-
-    int i = 0;
-    int b = 0;
-    int cows;
-    int fst = -1;
+bool check(vector<int> &v, int R){
+    int i = 0, hand = 0;
     while(i<n){
-        if(fst == -1){
-            fst = a[i];
-            cows = 1;
-            b++;
-        }else if(a[i] - fst > maxt || cows + 1 > c){
-            b++;
-            fst = a[i];
-            cows = 1;
-        }else{
-            cows++;
+        int x = v[i] + 2*R;
+        hand++;
+        auto it = upper_bound(v.begin(), v.end(), x);
+        if(it == v.end()){
+            break;
         }
-        i++;
+        i = it - v.begin();
     }
 
-    if(b > m) return false;
+    if(hand > k) return false;
     return true;
 }
 
@@ -50,23 +40,21 @@ void setIO(string name = ""){
 
 int main() { 
 
-  setIO("convention");
+  setIO("angry");
 
-  cin >> n >> m >> c;
+  cin >> n >> k;
+  vector<int> v(n);
 
   for(int i = 0; i<n; i++){
-    cin >> a[i];
+    cin >> v[i];
   }
 
-  sort(a, a+n);
+  sort(v.begin(), v.end());
 
-  int l = 0;
-  int r = a[n-1] - a[0];
-  int mid, ans = 0;
-
+  int l = 0, r = 1e9, mid, ans;
   while(l<=r){
     mid = l + (r-l)/2;
-    if(check(mid)){
+    if(check(v, mid)){
         ans = mid;
         r = mid - 1;
     }else{
