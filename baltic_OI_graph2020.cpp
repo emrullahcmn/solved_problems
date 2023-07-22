@@ -13,7 +13,7 @@
 typedef long long ll; 
 using namespace std;
 
-// problem url : https://codeforces.com/contest/1387/status
+// problem url : https://codeforces.com/contest/1387/problem/A
 
 vector<pair<int, int>> adj[N];
 bool visited[N];
